@@ -1,6 +1,5 @@
 # ===== OhMyZsh Config File =====
 export ZSH="$HOME/.oh-my-zsh"
-eval "$(starship init zsh)"
 
 ZSH_THEME="agnoster" ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
@@ -82,6 +81,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
 # Prompt styling
 export PS1="%F{green}%n@%m%f:%F{blue}%~%f$ "
+eval "$(starship init zsh)"
 
 # === Aliases to override old habits ===
 alias cat='bat --paging=never'
