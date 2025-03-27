@@ -102,7 +102,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias sudo='doas'
 
 
 # Autosuggestions için görünür renk ayarı (gri yapar)
@@ -111,3 +110,14 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 # Prompt styling (örnek, sana özel yapılabilir)
 export PS1="%F{green}%n@%m%f:%F{blue}%~%f$ "
 eval "$(starship init zsh)"
+
+# === Aliases to override old habits ===
+alias cat='bat --paging=never'
+alias sudo='doas'
+alias ls='exa --color=auto'
+alias la='exa -a'
+alias ll='exa -l'
+alias lla='exa -la'
+alias grep='grep --color=auto'
+alias clear='clear && echo "temizledim kardesim buyur"'
+alias rm='rm -i'
