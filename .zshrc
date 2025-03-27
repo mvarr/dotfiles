@@ -1,4 +1,5 @@
 # ===== OhMyZsh Config File =====
+export ZSH="$HOME/.oh-my-zsh"
 eval "$(starship init zsh)"
 
 ZSH_THEME="agnoster" ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
