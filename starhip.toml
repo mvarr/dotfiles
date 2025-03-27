@@ -1,0 +1,89 @@
+# Minimal ve verimli starship config
+
+add_newline = false
+
+format = """
+$time$battery$username$hostname$directory$git_branch$git_status$python$cmd_duration$memory_usage$jobs
+$character
+"""
+
+# Prompt karakteri
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[x](bold red)"
+vicmd_symbol = "[<](bold yellow)"
+
+# Kullanıcı adı (rootsa göster)
+[username]
+show_always = false
+style_user = "bold blue"
+style_root = "bold red"
+
+# Hostname (SSH ile bağlanınca göster)
+[hostname]
+ssh_only = true
+style = "dimmed green"
+
+# Klasör yolu
+[directory]
+style = "cyan"
+truncate_to_repo = true
+truncation_length = 3
+
+# Git branch
+[git_branch]
+style = "bold purple"
+
+# Git durumu
+[git_status]
+style = "yellow"
+
+# Python versiyonu
+[python]
+style = "bold green"
+format = " via [py $version]($style)"
+
+# Komut süresi (0.5 saniyeyi geçerse göster)
+[cmd_duration]
+min_time = 500
+format = " [took $duration]($style)"
+style = "bold yellow"
+
+# Arkaplan prosesi varsa
+[jobs]
+style = "bold red"
+symbol = "+"
+
+# Bellek kullanımı (low overhead)
+[memory_usage]
+disabled = false
+threshold = 75
+symbol = "RAM:"
+style = "bold dimmed blue"
+
+# Saat bilgisi (her prompt'ta saat gösterir)
+[time]
+disabled = false
+format = "[$time]($style) "
+style = "bold dimmed white"
+time_format = "%H:%M"
+
+# Batarya göstergesi
+[battery]
+disabled = false
+format = " [$symbol$percentage]($style)"
+full_symbol = "++"
+charging_symbol = "^"
+discharging_symbol = ">"
+
+[[battery.display]]
+threshold = 30
+style = "bold red"
+
+[[battery.display]]
+threshold = 60
+style = "bold yellow"
+
+[[battery.display]]
+threshold = 100
+style = "bold green"
