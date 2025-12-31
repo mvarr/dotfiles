@@ -10,6 +10,17 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="eastwood"
 
+
+export EDITOR=vim
+export PAGER=less
+
+
+# history
+export HISTFILE=~/.zsh_history
+export HISTSIZE=16000 # spots for duplicates/uniques
+export SAVEHIST=15000 # unique events guaranteed
+
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -70,9 +81,28 @@ ZSH_THEME="eastwood"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    z
+)
 
 source $ZSH/oh-my-zsh.sh
+
+# Save command history with timestamps and duration
+setopt extended_history
+# Incrementally add new history lines
+setopt inc_append_history
+# Expire duplicates first when history is full
+setopt hist_expire_dups_first
+# Verify history expansion rather than executing immediately
+setopt hist_verify
+# Share history between all instances of the shell
+setopt share_history
+# Don't automatically change directories when entering a directory name
+unsetopt autocd
+
 
 # User configuration
 
@@ -88,6 +118,46 @@ source $ZSH/oh-my-zsh.sh
 #   export EDITOR='nvim'
 # fi
 
+#
+# pyenv zsh
+# https://github.com/pyenv/pyenv/issues/1906#issuecomment-839556656
+#
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+fi
+
+# Extract file
+extract() {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)  tar xjf $1      ;;
+            *.tar.gz)   tar xzf $1      ;;
+            *.bz2)      bunzip2 $1      ;;
+            *.rar)      rar x $1        ;;
+            *.gz)       gunzip $1       ;;
+            *.tar)      tar xf $1       ;;
+            *.tbz2)     tar xjf $1      ;;
+            *.tgz)      tar xzf $1      ;;
+            *.zip)      unzip $1        ;;
+            *.Z)        uncompress $1   ;;
+            *)          echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+
+#
+# https://golang.org/doc/install#install
+#
+# Go lives in /usr/local/go
+#
+if [ -d /usr/local/go ]; then
+    export PATH=${PATH}:/usr/local/go/bin
+    export GOPATH=${HOME}/go
+fi
+
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
 
@@ -100,11 +170,26 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-export PATH=/usr/local/go/bin:$PATH
+alias zshconfig="nano ~/.zshrc"
+alias ohmyzsh="nano ~/.oh-my-zsh"
+
+# typo
+alias cvd=cd
+alias server="~/server-start.sh"
+
 export OLLAMA_HOST=127.0.0.1:11500
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Lazy Load NVM
+# Initializes only when a node command is triggered
+#function nvm_lazy_load() {
+#    unset -f nvm node npm npx
+#    export NVM_DIR="$HOME/.nvm"
+#    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+#    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+#    "$@"
+#}
+
+# placeholder functions that trigger the loader
+#for cmd in nvm node npm npx; do
+#    eval "$cmd() { nvm_lazy_load $cmd \"\$@\"; }"
+#done
