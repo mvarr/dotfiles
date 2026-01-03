@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/var-deb/.zsh/completions:"* ]]; then export FPATH="/home/var-deb/.zsh/completions:$FPATH"; fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -193,3 +195,28 @@ export OLLAMA_HOST=127.0.0.1:11500
 #for cmd in nvm node npm npx; do
 #    eval "$cmd() { nvm_lazy_load $cmd \"\$@\"; }"
 #done
+
+# bun completions
+[ -s "/home/var-deb/.bun/_bun" ] && source "/home/var-deb/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+. "/home/var-deb/.deno/env"
+# Initialize zsh completions (added by deno install script)
+autoload -Uz compinit
+compinit
+
+
+# yt-dlp configs
+
+# Default is 1080p (handled by my default yt-dlp config file), these override it:
+
+# 720p Resolution
+alias yt-dlp-720='yt-dlp -f "bv*[height<=720]+ba/b[height<=720]"'
+
+# 480p Resolution (Data saver)
+alias yt-dlp-480='yt-dlp -f "bv*[height<=480]+ba/b[height<=480]"'
+
+# Audio Only (Best quality audio, converted to MP3)
+alias yt-dlp-audio='yt-dlp -x --audio-format mp3'

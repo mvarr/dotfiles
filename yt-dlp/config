@@ -1,0 +1,16 @@
+# Prefer 1080p or lower, bitrate limit 192k
+-f "bv*[height<=1080]+ba[abr<=192]/b[height<=1080][abr<=192]"
+
+# SponsorBlock: Remove sponsors
+--sponsorblock-remove sponsor
+
+# Subtitles: Embed English subs
+--embed-subs
+--sub-langs "en.*"
+
+# Post-processing: Recode to mp4 and set CRF 26
+#--recode-video mp4
+#--postprocessor-args "VideoConvertor+ffmpeg:-crf 26"
+
+# Workarounds: Use a specific user agent to reduce bot detection
+--user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
